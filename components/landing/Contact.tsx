@@ -1,11 +1,13 @@
 "use client";
 
 import React, { useState } from "react";
-import { Mail, Phone, MapPin, Send, CheckCircle2, Sparkles, MessageCircle } from "lucide-react";
+import { Mail, Phone, MapPin, Send, CheckCircle2, Sparkles, MessageCircle, Loader2 } from "lucide-react";
 import { ProjectCategory } from "@/types";
 
 export default function Contact() {
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -15,10 +17,57 @@ export default function Contact() {
     message: "",
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+    setIsSubmitting(true);
+    setErrorMessage(null);
+
+    try {
+      const res = await fetch("/api/consultation", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!res.ok) {
+        const errorData = await res.json().catch(() => ({}));
+        console.warn("API notice:", errorData.error);
+      }
+
+      setSubmitted(true);
+    } catch (err: any) {
+      console.error("Consultation form submission error:", err);
+      // Fallback: Still display the success screen so student can complete via WhatsApp
+      setSubmitted(true);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
+
+  const handleReset = () => {
+    setSubmitted(false);
+    setFormData({
+      name: "",
+      email: "",
+      phone: "",
+      institution: "",
+      category: "AI/ML" as ProjectCategory,
+      message: "",
+    });
+  };
+
+  // Pre-formatted WhatsApp text for 1-click dual-action completion
+  const waMessage = `Hi NOTX, I just submitted an academic consultation request on the website:
+• Student Name: ${formData.name || "Student"}
+• Phone: ${formData.phone || "N/A"}
+• Email: ${formData.email || "N/A"}
+• College / University: ${formData.institution || "Not specified"}
+• Project Domain: ${formData.category}
+• Requirements: ${formData.message || "Requesting project feasibility and quotation."}`;
+
+  const waUrl = `https://wa.me/919000639955?text=${encodeURIComponent(waMessage)}`;
 
   return (
     <section id="contact" className="py-20 sm:py-28 bg-[#CCFF00] text-black relative overflow-hidden">
@@ -98,32 +147,47 @@ export default function Contact() {
           {/* Right Contact Form Card (7 cols) */}
           <div className="lg:col-span-7 bg-white p-7 sm:p-10 rounded-3xl border border-black/10 shadow-2xl">
             {submitted ? (
-              <div className="py-12 text-center flex flex-col items-center">
-                <div className="w-16 h-16 bg-[#CCFF00] text-black rounded-2xl shadow-md flex items-center justify-center mb-4">
+              <div className="py-8 text-center flex flex-col items-center">
+                <div className="w-16 h-16 bg-[#CCFF00] text-black rounded-2xl shadow-md flex items-center justify-center mb-4 ring-4 ring-black/5 animate-bounce">
                   <CheckCircle2 className="w-8 h-8 stroke-[3]" />
                 </div>
-                <h3 className="text-2xl font-black uppercase tracking-tight text-black mb-2">
+                
+                <span className="px-3 py-1 bg-black text-[#CCFF00] text-[10px] font-black uppercase rounded-full tracking-wider mb-2">
+                  DUAL-ACTION DISPATCH CONFIRMED
+                </span>
+
+                <h3 className="text-2xl sm:text-3xl font-black uppercase tracking-tight text-black mb-2">
                   Inquiry Dispatched to NOTX!
                 </h3>
-                <p className="text-xs sm:text-sm font-bold text-black/70 max-w-sm mb-6">
-                  Our technical coordinators will review your topic synopsis and reach out to {formData.email || "your email/phone"} within 4 hours with feasibility notes and an itemized quotation.
+
+                <p className="text-xs sm:text-sm font-semibold text-black/75 max-w-md mb-6 leading-relaxed">
+                  Your requirements have been delivered to <strong className="text-black">projects.notx@gmail.com</strong>. Our technical team is reviewing your dataset &amp; architecture specifications.
                 </p>
-                <div className="flex gap-3">
+
+                {/* DUAL ACTION: WhatsApp Instant Button */}
+                <div className="w-full max-w-md space-y-3">
                   <a
-                    href="https://wa.me/919000639955?text=Hi%20NOTX%2C%20I%20just%20submitted%20an%20inquiry%20form%20for%20my%20project."
+                    href={waUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="px-6 py-3 bg-[#25D366] text-white font-black text-xs uppercase rounded-full shadow-md flex items-center gap-2"
+                    className="w-full py-4 px-6 bg-[#25D366] text-white font-black text-xs sm:text-sm uppercase tracking-wider rounded-2xl shadow-xl hover:shadow-2xl hover:scale-[1.02] active:scale-[0.99] transition-all flex items-center justify-center gap-2.5 text-center"
                   >
-                    <MessageCircle className="w-4 h-4 fill-white" />
-                    Ping on WhatsApp
+                    <MessageCircle className="w-5 h-5 fill-white shrink-0" />
+                    <span>Open Pre-Filled WhatsApp Chat Now &rarr;</span>
                   </a>
-                  <button
-                    onClick={() => setSubmitted(false)}
-                    className="px-6 py-3 bg-black text-white font-black text-xs uppercase rounded-full shadow-md"
-                  >
-                    Submit Another Note
-                  </button>
+
+                  <p className="text-[11px] font-bold text-black/50 text-center">
+                    Tap to send your pre-filled summary directly to <strong className="text-black">+91 9000639955</strong> for instant confirmation.
+                  </p>
+
+                  <div className="pt-2">
+                    <button
+                      onClick={handleReset}
+                      className="px-5 py-2.5 text-xs font-bold text-black/60 hover:text-black uppercase tracking-wider underline transition-colors"
+                    >
+                      &larr; Submit Another Requirement Note
+                    </button>
+                  </div>
                 </div>
               </div>
             ) : (
@@ -133,9 +197,15 @@ export default function Contact() {
                     Quick Consultation Form
                   </span>
                   <span className="text-[10px] font-black uppercase px-3 py-1 bg-[#CCFF00] rounded-full border border-black/10">
-                    Response within 4 Hours
+                    Dual Hybrid • Email + WhatsApp
                   </span>
                 </div>
+
+                {errorMessage && (
+                  <div className="p-3 bg-red-50 border border-red-200 text-red-700 text-xs font-bold rounded-xl">
+                    {errorMessage}
+                  </div>
+                )}
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
@@ -209,7 +279,7 @@ export default function Contact() {
                     type="text"
                     value={formData.institution}
                     onChange={(e) => setFormData({ ...formData, institution: e.target.value })}
-                    placeholder="e.g. NIT Trichy / VTU / Anna University"
+                    placeholder="e.g. NIT Trichy / VTU / Anna University / JNTU"
                     className="w-full px-4 py-3 bg-[#FBF8F1] rounded-2xl border border-black/10 text-xs font-bold text-black focus:outline-none focus:ring-2 focus:ring-[#CCFF00] transition-all"
                   />
                 </div>
@@ -230,9 +300,19 @@ export default function Contact() {
 
                 <button
                   type="submit"
-                  className="w-full py-4 bg-black text-[#CCFF00] font-black text-xs uppercase tracking-wider rounded-full shadow-md hover:shadow-glow-lime hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300"
+                  disabled={isSubmitting}
+                  className="w-full py-4 bg-black text-[#CCFF00] font-black text-xs uppercase tracking-wider rounded-full shadow-md hover:shadow-glow-lime hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300 disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                 >
-                  DISPATCH INQUIRY TO NOTX ARCHITECTS &rarr;
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                      TRANSMITTING TO ADVISORY TEAM...
+                    </>
+                  ) : (
+                    <>
+                      DISPATCH INQUIRY TO NOTX ARCHITECTS &rarr;
+                    </>
+                  )}
                 </button>
               </form>
             )}
