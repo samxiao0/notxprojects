@@ -1,0 +1,222 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function getUserData() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data;
+    }
+    
+    function isAdmin() {
+      return isAuthenticated() && (
+        request.auth.token.role == 'admin' ||
+        getUserData().role == 'admin'
+      );
+    }
+    
+    function isDeveloper() {
+      return isAuthenticated() && (
+        request.auth.token.role == 'developer' ||
+        getUserData().role == 'developer'
+      );
+    }
+    
+    function isStudent() {
+      return isAuthenticated() && (
+        request.auth.token.role == 'student' ||
+        getUserData().role == 'student'
+      );
+    }
+    
+    function isUser(uid) {
+      return isAuthenticated() && request.auth.uid == uid;
+    }
+    
+    function isProjectMember(projectId) {
+      let p = get(/databases/$(database)/documents/projects/$(projectId)).data;
+      return isAuthenticated() && (
+        isAdmin() ||
+        p.studentId == request.auth.uid ||
+        p.developerId == request.auth.uid
+      );
+    }
+
+    // 1. Users collection
+    match /users/{userId} {
+      allow read: if isAuthenticated();
+      // Only user can write own profile, but cannot self-escalate role to developer/admin
+      allow create: if isUser(userId) && 
+        (request.resource.data.role == 'student' || isAdmin());
+      allow update: if isAdmin() || (
+        isUser(userId) && 
+        request.resource.data.role == resource.data.role
+      );
+      allow delete: if isAdmin();
+    }
+    
+    // 2. Projects collection
+    match /projects/{projectId} {
+      allow read: if isAuthenticated() && (
+        isAdmin() ||
+        resource.data.studentId == request.auth.uid ||
+        resource.data.developerId == request.auth.uid
+      );
+      allow create: if isAuthenticated();
+      allow update: if isAuthenticated() && (
+        isAdmin() ||
+        resource.data.developerId == request.auth.uid ||
+        resource.data.studentId == request.auth.uid
+      );
+      allow delete: if isAdmin();
+    }
+    
+    // 3. Quotations collection
+    match /quotations/{quotationId} {
+      allow read: if isAuthenticated() && (
+        isAdmin() ||
+        resource.data.studentId == request.auth.uid
+      );
+      allow create: if isAdmin();
+      allow update: if isAuthenticated() && (
+        isAdmin() ||
+        (resource.data.studentId == request.auth.uid && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status', 'rejectionReason', 'updatedAt']))
+      );
+      allow delete: if isAdmin();
+    }
+    
+    // 4. Tasks collection
+    match /tasks/{taskId} {
+      allow read: if isAuthenticated() && isProjectMember(resource.data.projectId);
+      allow create: if isAuthenticated() && isProjectMember(request.resource.data.projectId);
+      allow update: if isAuthenticated() && isProjectMember(resource.data.projectId);
+      allow delete: if isAuthenticated() && (isAdmin() || isDeveloper());
+    }
+    
+    // 5. Milestones collection
+    match /milestones/{milestoneId} {
+      allow read: if isAuthenticated() && isProjectMember(resource.data.projectId);
+      allow create: if isAuthenticated() && (isAdmin() || isDeveloper());
+      allow update: if isAuthenticated() && isProjectMember(resource.data.projectId);
+      allow delete: if isAdmin();
+    }
+    
+    // 6. Project Folders
+    match /projectFolders/{folderId} {
+      allow read: if isAuthenticated() && isProjectMember(resource.data.projectId);
+      allow create: if isAuthenticated() && (isAdmin() || isDeveloper());
+      allow update: if isAuthenticated() && (isAdmin() || isDeveloper());
+      allow delete: if isAuthenticated() && (isAdmin() || isDeveloper());
+    }
+    
+    // 7. Project Files
+    match /projectFiles/{fileId} {
+      allow read: if isAuthenticated() && (
+        isAdmin() || (
+          isProjectMember(resource.data.projectId) && (
+            resource.data.visibility == 'student_and_developer' ||
+            resource.data.visibility == 'authorized_project_members' ||
+            (resource.data.visibility == 'developer_only' && isDeveloper())
+          )
+        )
+      );
+      allow create: if isAuthenticated() && isProjectMember(request.resource.data.projectId);
+      allow update: if isAuthenticated() && isProjectMember(resource.data.projectId);
+      allow delete: if isAuthenticated() && (isAdmin() || isDeveloper());
+    }
+    
+    // 8. Chats & Messages
+    match /chats/{chatId} {
+      allow read: if isAuthenticated() && (
+        isAdmin() ||
+        request.auth.uid in resource.data.participants
+      );
+      allow create: if isAuthenticated();
+      allow update: if isAuthenticated() && (
+        isAdmin() ||
+        request.auth.uid in resource.data.participants
+      );
+      allow delete: if isAdmin();
+    }
+    
+    match /messages/{messageId} {
+      allow read: if isAuthenticated();
+      allow create: if isAuthenticated();
+      allow update: if isAuthenticated() && (
+        isAdmin() ||
+        resource.data.senderId == request.auth.uid ||
+        request.resource.data.diff(resource.data).affectedKeys().hasOnly(['readBy'])
+      );
+      allow delete: if isAuthenticated() && (
+        isAdmin() || resource.data.senderId == request.auth.uid
+      );
+    }
+    
+    // 9. Notes
+    match /notes/{noteId} {
+      allow read: if isAuthenticated() && (
+        isAdmin() ||
+        resource.data.authorId == request.auth.uid ||
+        (resource.data.isShared == true && isProjectMember(resource.data.projectId))
+      );
+      allow create: if isAuthenticated();
+      allow update: if isAuthenticated() && (
+        isAdmin() ||
+        resource.data.authorId == request.auth.uid ||
+        (resource.data.isShared == true && isProjectMember(resource.data.projectId))
+      );
+      allow delete: if isAuthenticated() && (
+        isAdmin() || resource.data.authorId == request.auth.uid
+      );
+    }
+    
+    // 10. Comments
+    match /comments/{commentId} {
+      allow read: if isAuthenticated() && isProjectMember(resource.data.projectId);
+      allow create: if isAuthenticated() && isProjectMember(request.resource.data.projectId);
+      allow update: if isAuthenticated() && (isAdmin() || resource.data.authorId == request.auth.uid);
+      allow delete: if isAuthenticated() && (isAdmin() || resource.data.authorId == request.auth.uid);
+    }
+    
+    // 11. Notifications
+    match /notifications/{notificationId} {
+      allow read: if isAuthenticated() && (resource.data.userId == request.auth.uid || isAdmin());
+      allow create: if isAuthenticated();
+      allow update: if isAuthenticated() && resource.data.userId == request.auth.uid;
+      allow delete: if isAuthenticated() && (resource.data.userId == request.auth.uid || isAdmin());
+    }
+    
+    // 12. Activity Logs
+    match /activityLogs/{logId} {
+      allow read: if isAuthenticated() && (
+        isAdmin() ||
+        (resource.data.projectId != null && isProjectMember(resource.data.projectId))
+      );
+      allow create: if isAuthenticated();
+      allow update, delete: if isAdmin();
+    }
+    
+    // 13. Payments
+    match /payments/{paymentId} {
+      allow read: if isAuthenticated() && (
+        isAdmin() || resource.data.studentId == request.auth.uid
+      );
+      allow create: if isAuthenticated();
+      allow update: if isAdmin();
+      allow delete: if isAdmin();
+    }
+    
+    // 14. Developer Assignments
+    match /developerAssignments/{assignmentId} {
+      allow read: if isAuthenticated() && (
+        isAdmin() ||
+        resource.data.developerId == request.auth.uid
+      );
+      allow write: if isAdmin();
+    }
+  }
+}

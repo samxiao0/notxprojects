@@ -1,0 +1,140 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #ffffff;
+  --foreground: #0f172a;
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Custom subtle scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f8fafc;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Clean touch targets for mobile */
+button, a, input, select, textarea {
+  touch-action: manipulation;
+}
+
+/* Sleek Modern UI Utilities (No Brutalism Shadows) */
+.modern-border {
+  border-width: 1px;
+  border-color: rgba(10, 10, 10, 0.12);
+}
+
+.modern-border-strong {
+  border-width: 1.5px;
+  border-color: rgba(10, 10, 10, 0.2);
+}
+
+.modern-btn {
+  border-radius: 9999px;
+  font-weight: 800;
+  letter-spacing: 0.025em;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.08);
+}
+
+.modern-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px -4px rgba(0, 0, 0, 0.16);
+}
+
+.modern-btn:active {
+  transform: translateY(0px);
+  box-shadow: 0 4px 8px -2px rgba(0, 0, 0, 0.1);
+}
+
+.modern-card {
+  border-radius: 1.5rem;
+  border: 1px solid rgba(10, 10, 10, 0.08);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.06), 0 4px 12px -4px rgba(0, 0, 0, 0.03);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.modern-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.14), 0 10px 20px -6px rgba(0, 0, 0, 0.06);
+}
+
+.modern-pill {
+  border-radius: 9999px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  border: 1px solid rgba(10, 10, 10, 0.15);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+/* Keyframes for Smooth Floating & Shimmer Animations */
+@keyframes floatY {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.animate-float-y {
+  animation: floatY 5s ease-in-out infinite;
+}
+
+.animate-float-y-delayed {
+  animation: floatY 5s ease-in-out 2.5s infinite;
+}
+
+/* Masked Gradient Edge for Butter-Smooth Marquee Tickers */
+.marquee-mask {
+  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+}
+
+/* Continuous Marquee Animation */
+@keyframes ticker {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.marquee-container {
+  display: flex;
+  overflow: hidden;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.marquee-content {
+  display: flex;
+  flex-shrink: 0;
+  animation: ticker 30s linear infinite;
+}
+
+.marquee-content:hover {
+  animation-play-state: paused;
+}
