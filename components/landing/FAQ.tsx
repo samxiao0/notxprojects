@@ -27,10 +27,7 @@ export default function FAQ() {
       q: "How can I contact NOTX directly?",
       a: "You can WhatsApp or call our team directly at +91 9000639955 or email us at projects.notx@gmail.com. We respond within 4 hours to review your synopsis and verify feasibility.",
     },
-    {
-      q: "How are files stored and delivered securely?",
-      a: "NOTX integrates Backblaze B2 cloud storage. Deliverables, zip archives, and IEEE reports are provided directly via secure 1-click cloud download links.",
-    },
+
   ];
 
   return (
@@ -60,15 +57,13 @@ export default function FAQ() {
             return (
               <div
                 key={faq.q}
-                className={`rounded-2xl border border-black/10 shadow-md transition-all duration-300 overflow-hidden ${
-                  isOpen ? "bg-white shadow-xl ring-2 ring-[#CCFF00]/60" : "bg-white hover:bg-slate-50"
-                }`}
+                className={`rounded-2xl border border-black/10 shadow-md transition-all duration-300 overflow-hidden ${isOpen ? "bg-white shadow-xl ring-2 ring-[#CCFF00]/60" : "bg-white hover:bg-slate-50"
+                  }`}
               >
                 <button
                   onClick={() => setOpenIndex(isOpen ? null : idx)}
-                  className={`w-full py-5 px-6 sm:px-7 flex items-center justify-between text-left transition-colors ${
-                    isOpen ? "bg-[#CCFF00] text-black" : ""
-                  }`}
+                  className={`w-full py-5 px-6 sm:px-7 flex items-center justify-between text-left transition-colors ${isOpen ? "bg-[#CCFF00] text-black" : ""
+                    }`}
                 >
                   <span className="font-black text-base sm:text-lg tracking-tight uppercase pr-4">
                     {faq.q}

@@ -69,10 +69,7 @@ export default function PricingPlans() {
       <div className="max-w-5xl mx-auto px-4 sm:px-6 relative z-10">
         {/* Streamlined Compact Header - Fits in 1 Viewport */}
         <div className="text-center max-w-2xl mx-auto mb-3 sm:mb-4">
-          <div className="inline-flex items-center gap-1.5 px-3 py-0.5 bg-black text-[#CCFF00] font-black text-[10px] sm:text-xs uppercase rounded-full shadow-sm mb-1">
-            <Tag className="w-3 h-3 text-[#CCFF00]" />
-            <span>TRANSPARENT ACADEMIC PRICING (INR)</span>
-          </div>
+
           <h2 className="text-xl sm:text-3xl lg:text-3xl font-black text-black tracking-tight uppercase leading-none">
             TWO FLAT PLANS. <span className="bg-[#CCFF00] text-black px-2 py-0.5 rounded-lg shadow-soft">ZERO SURPRISES.</span>
           </h2>
@@ -86,34 +83,30 @@ export default function PricingPlans() {
           <div className="bg-black/5 p-1 rounded-full border border-black/10 flex items-center gap-1 overflow-x-auto max-w-full scrollbar-none">
             <button
               onClick={() => setActiveTab("both")}
-              className={`px-3 sm:px-4 py-1 text-xs font-black uppercase rounded-full transition-all duration-200 whitespace-nowrap flex items-center gap-1 ${
-                activeTab === "both" ? "bg-black text-[#CCFF00] shadow-sm" : "text-black/70 hover:text-black"
-              }`}
+              className={`px-3 sm:px-4 py-1 text-xs font-black uppercase rounded-full transition-all duration-200 whitespace-nowrap flex items-center gap-1 ${activeTab === "both" ? "bg-black text-[#CCFF00] shadow-sm" : "text-black/70 hover:text-black"
+                }`}
             >
               <Layers className="w-3 h-3" />
               Both Plans
             </button>
             <button
               onClick={() => setActiveTab("standard")}
-              className={`px-3 sm:px-4 py-1 text-xs font-black uppercase rounded-full transition-all duration-200 whitespace-nowrap ${
-                activeTab === "standard" ? "bg-black text-[#CCFF00] shadow-sm" : "text-black/70 hover:text-black"
-              }`}
+              className={`px-3 sm:px-4 py-1 text-xs font-black uppercase rounded-full transition-all duration-200 whitespace-nowrap ${activeTab === "standard" ? "bg-black text-[#CCFF00] shadow-sm" : "text-black/70 hover:text-black"
+                }`}
             >
               Standard (₹4k)
             </button>
             <button
               onClick={() => setActiveTab("premium")}
-              className={`px-3 sm:px-4 py-1 text-xs font-black uppercase rounded-full transition-all duration-200 whitespace-nowrap ${
-                activeTab === "premium" ? "bg-black text-[#CCFF00] shadow-sm" : "text-black/70 hover:text-black"
-              }`}
+              className={`px-3 sm:px-4 py-1 text-xs font-black uppercase rounded-full transition-all duration-200 whitespace-nowrap ${activeTab === "premium" ? "bg-black text-[#CCFF00] shadow-sm" : "text-black/70 hover:text-black"
+                }`}
             >
               Premium (₹5k)
             </button>
             <button
               onClick={() => setActiveTab("compare")}
-              className={`px-3 sm:px-4 py-1 text-xs font-black uppercase rounded-full transition-all duration-200 whitespace-nowrap flex items-center gap-1 ${
-                activeTab === "compare" ? "bg-black text-[#CCFF00] shadow-sm" : "text-black/70 hover:text-black"
-              }`}
+              className={`px-3 sm:px-4 py-1 text-xs font-black uppercase rounded-full transition-all duration-200 whitespace-nowrap flex items-center gap-1 ${activeTab === "compare" ? "bg-black text-[#CCFF00] shadow-sm" : "text-black/70 hover:text-black"
+                }`}
             >
               <Table className="w-3 h-3" />
               Compare Matrix
@@ -124,9 +117,8 @@ export default function PricingPlans() {
         {/* Dual Plan Cards - Compact Single Viewport Layout */}
         {activeTab !== "compare" && (
           <div
-            className={`grid gap-3 sm:gap-4 max-w-4xl mx-auto items-stretch ${
-              activeTab === "both" ? "grid-cols-1 md:grid-cols-2" : "grid-cols-1 max-w-md"
-            }`}
+            className={`grid gap-3 sm:gap-4 max-w-4xl mx-auto items-stretch ${activeTab === "both" ? "grid-cols-1 md:grid-cols-2" : "grid-cols-1 max-w-md"
+              }`}
           >
             {/* PLAN 1: STANDARD PLAN (₹4,000) */}
             {(activeTab === "both" || activeTab === "standard") && (
@@ -354,21 +346,7 @@ export default function PricingPlans() {
           </div>
         )}
 
-        {/* 1-Line Integrated Student Concession Strip (Zero Space Waste) */}
-        <div className="mt-3 sm:mt-4 bg-[#0D3B2E] text-white rounded-xl py-2 px-3 sm:px-4 flex flex-col sm:flex-row items-center justify-between gap-1.5 text-xs font-bold border border-white/10 shadow-sm max-w-4xl mx-auto">
-          <div className="flex items-center gap-1.5 text-center sm:text-left text-[11px] sm:text-xs">
-            <span>🏷️</span>
-            <span><strong>Student Group Concessions:</strong> Special discounts available for teams of 2+ members.</span>
-          </div>
-          <a
-            href="https://wa.me/919000639955?text=Hi%20NOTX%2C%20we%20are%20a%20student%20group%20and%20would%20like%20to%20request%20a%20project%20concession."
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-[#CCFF00] hover:underline font-black whitespace-nowrap shrink-0 text-[11px] sm:text-xs"
-          >
-            Inquire on WhatsApp (+91 9000639955) &rarr;
-          </a>
-        </div>
+
       </div>
     </section>
   );

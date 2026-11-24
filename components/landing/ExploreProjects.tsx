@@ -50,7 +50,7 @@ export default function ExploreProjects() {
       deliverables: [
         "Pre-trained PyTorch Weights Loader",
         "ROS2 Sensor Integration Node",
-        "42-Page Formatted IEEE Manuscript",
+        "42-Page Report",
         "PowerPoint Presentation Deck (25 Slides)",
         "30+ Viva Oral Exam Q&A Sheet",
         "AnyDesk Remote Laptop Setup Guarantee",
@@ -80,7 +80,7 @@ export default function ExploreProjects() {
         "MQTT Broker & InfluxDB Telemetry Pipeline",
         "Real-Time Responsive Web Dashboard",
         "Circuit Schematic & Wiring Diagrams",
-        "40+ Page IEEE Standard Dissertation",
+        "40+ Report",
         "AnyDesk Remote Laptop Setup & Live Run",
       ],
       ieeeChapters: [
@@ -189,11 +189,10 @@ export default function ExploreProjects() {
             <button
               key={cat}
               onClick={() => setSelectedCategory(cat)}
-              className={`px-4 sm:px-5 py-2 sm:py-2.5 font-black text-xs uppercase tracking-wider rounded-full whitespace-nowrap transition-all duration-300 ${
-                selectedCategory === cat
-                  ? "bg-[#CCFF00] text-black shadow-glow-lime scale-105"
-                  : "bg-white/10 text-white hover:bg-white/20 border border-white/10"
-              }`}
+              className={`px-4 sm:px-5 py-2 sm:py-2.5 font-black text-xs uppercase tracking-wider rounded-full whitespace-nowrap transition-all duration-300 ${selectedCategory === cat
+                ? "bg-[#CCFF00] text-black shadow-glow-lime scale-105"
+                : "bg-white/10 text-white hover:bg-white/20 border border-white/10"
+                }`}
             >
               {cat === "ALL" ? "ALL PROJECTS" : cat}
             </button>

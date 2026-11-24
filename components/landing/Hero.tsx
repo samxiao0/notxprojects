@@ -23,15 +23,7 @@ export default function Hero() {
       <div className="absolute -top-24 -left-24 w-96 h-96 bg-white/10 rounded-full blur-3xl pointer-events-none"></div>
       <div className="absolute top-1/2 -right-24 w-96 h-96 bg-[#CCFF00]/20 rounded-full blur-3xl pointer-events-none"></div>
 
-      {/* Floating Animated Badges */}
-      <div className="absolute top-8 left-8 hidden xl:inline-flex items-center gap-2 px-4 py-2 bg-[#CCFF00] rounded-full font-black text-xs uppercase shadow-soft animate-float border border-black/15 z-10">
-        <Star className="w-3.5 h-3.5 fill-black animate-spin-slow" />
-        ACADEMIC DISSERTATION LAB
-      </div>
-      <div className="absolute top-12 right-12 hidden xl:inline-flex items-center gap-2 px-4 py-2 bg-white rounded-full font-black text-xs uppercase shadow-soft animate-float-delayed border border-black/10 z-10">
-        <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-        <span>₹4,000 & ₹5,000 FIXED TIERS</span>
-      </div>
+
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center pb-16 sm:pb-24">
@@ -82,7 +74,7 @@ export default function Hero() {
             {/* Trust Highlights Strip with smooth pill badges */}
             <div className="flex flex-wrap items-center gap-2.5 pt-2 text-xs font-black uppercase text-black">
               <span className="px-3.5 py-1.5 bg-white/95 rounded-full border border-black/10 shadow-sm flex items-center gap-1.5">
-                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" /> 100% ORIGINAL IEEE CODE
+                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" /> 100% ORIGINAL  CODE
               </span>
               <span className="px-3.5 py-1.5 bg-[#CCFF00] rounded-full border border-black/15 shadow-sm flex items-center gap-1.5">
                 <Laptop className="w-3.5 h-3.5 text-black" /> ANYDESK LIVE RUN GUARANTEE
@@ -122,7 +114,7 @@ export default function Hero() {
                   &gt; Tech: [PyTorch, CUDA, AirSim, OpenCV, ROS2, Next.js]
                 </div>
                 <div className="text-white/80">
-                  &gt; Deliverables: 42-page IEEE Manuscript + PPT + AnyDesk Live Setup
+                  &gt; Deliverables: 42-page Report + PPT + AnyDesk Live Setup
                 </div>
                 <div className="p-3 bg-white/5 border border-white/10 text-white rounded-2xl">
                   <div className="flex justify-between items-center mb-1 text-[10px]">
@@ -160,56 +152,26 @@ export default function Hero() {
           <div className="marquee-content gap-8 items-center">
             <span>✦ 100% ORIGINAL CODE</span>
             <span>★ NO GENERIC BOILERPLATES</span>
-            <span>✦ IEEE 40+ PAGE REPORTS</span>
+            <span>✦ 40+ PAGE REPORTS</span>
             <span>★ GUARANTEED ANYDESK LAPTOP SETUP</span>
             <span>✦ 30+ VIVA DEFENSE QUESTIONS</span>
             <span>★ ₹4,000 STANDARD & ₹5,000 FULL SUPPORT</span>
             <span>✦ STUDENT CONCESSIONS & DISCOUNTS</span>
-            <span>★ BACKBLAZE B2 VAULT</span>
+
             {/* Duplicate for infinite loop */}
             <span>✦ 100% ORIGINAL CODE</span>
             <span>★ NO GENERIC BOILERPLATES</span>
-            <span>✦ IEEE 40+ PAGE REPORTS</span>
+            <span>✦ 40+ PAGE REPORTS</span>
             <span>★ GUARANTEED ANYDESK LAPTOP SETUP</span>
             <span>✦ 30+ VIVA DEFENSE QUESTIONS</span>
             <span>★ ₹4,000 STANDARD & ₹5,000 FULL SUPPORT</span>
             <span>✦ STUDENT CONCESSIONS & DISCOUNTS</span>
-            <span>★ BACKBLAZE B2 VAULT</span>
+
           </div>
         </div>
       </div>
 
-      {/* CONTINUOUS MARQUEE TICKER 2 (Solid Black with gradient fade mask) */}
-      <div className="bg-[#0A0A0A] text-white py-3 border-b border-black/20 overflow-hidden font-mono uppercase text-xs tracking-widest select-none marquee-mask relative z-10">
-        <div className="marquee-container">
-          <div className="marquee-content gap-10 items-center">
-            <span className="text-[#CCFF00]">AI / MACHINE LEARNING</span>
-            <span className="text-white/30">•</span>
-            <span className="text-white">FULL STACK DEVELOPMENT</span>
-            <span className="text-white/30">•</span>
-            <span className="text-[#FF4D8D]">IOT TELEMETRY & ESP32</span>
-            <span className="text-white/30">•</span>
-            <span className="text-[#CCFF00]">MOBILE APPLICATIONS</span>
-            <span className="text-white/30">•</span>
-            <span className="text-white">WEBRTC SFU ARCHITECTURES</span>
-            <span className="text-white/30">•</span>
-            <span className="text-[#FF4D8D]">ALGORITHMIC RESEARCH</span>
-            <span className="text-white/30">•</span>
-            {/* Duplicate for infinite loop */}
-            <span className="text-[#CCFF00]">AI / MACHINE LEARNING</span>
-            <span className="text-white/30">•</span>
-            <span className="text-white">FULL STACK DEVELOPMENT</span>
-            <span className="text-white/30">•</span>
-            <span className="text-[#FF4D8D]">IOT TELEMETRY & ESP32</span>
-            <span className="text-white/30">•</span>
-            <span className="text-[#CCFF00]">MOBILE APPLICATIONS</span>
-            <span className="text-white/30">•</span>
-            <span className="text-white">WEBRTC SFU ARCHITECTURES</span>
-            <span className="text-white/30">•</span>
-            <span className="text-[#FF4D8D]">ALGORITHMIC RESEARCH</span>
-          </div>
-        </div>
-      </div>
+
     </section>
   );
 }

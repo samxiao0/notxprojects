@@ -7,23 +7,7 @@ import { ShieldCheck, Terminal, ArrowRight, Star, Heart, MessageCircle, Mail, Ph
 export default function Footer() {
   return (
     <footer className="bg-[#0A0A0A] text-white relative overflow-hidden">
-      {/* Top Banner Ribbon */}
-      <div className="bg-[#CCFF00] text-black py-2.5 px-4 font-black uppercase text-xs tracking-wider flex items-center justify-between overflow-x-auto marquee-mask">
-        <div className="flex items-center gap-6 whitespace-nowrap">
-          <span>★ NOTX ACADEMIC DISSERTATION LAB</span>
-          <span className="text-black/40">•</span>
-          <span>FLAT ₹4,000 & ₹5,000 PLANS</span>
-          <span className="text-black/40">•</span>
-          <span>ANYDESK LIVE SETUP GUARANTEE</span>
-          <span className="text-black/40">•</span>
-          <span>30+ VIVA DEFENSE PREP</span>
-          <span className="text-black/40">•</span>
-          <span>WHATSAPP: +91 9000639955</span>
-        </div>
-        <span className="hidden md:inline-block font-mono text-[10px] bg-black text-white px-2.5 py-0.5 rounded-full border border-black">
-          v2.6 // PROD-STABLE
-        </span>
-      </div>
+
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
         {/* Massive Editorial Headline */}
@@ -65,9 +49,7 @@ export default function Footer() {
             <p className="text-xs font-bold text-white/70 leading-relaxed">
               The creative academic engineering lab connecting computer science seniors with senior developers for production-grade final year capstone delivery.
             </p>
-            <div className="inline-block px-3 py-1 bg-white/10 text-[#CCFF00] font-mono text-[10px] font-bold rounded-full border border-[#CCFF00]/30">
-              Backblaze B2 Vault Secured
-            </div>
+
           </div>
 
           {/* Col 2: Engineering Domains */}
@@ -142,13 +124,7 @@ export default function Footer() {
           <div>
             &copy; {new Date().getFullYear()} NOTX ACADEMIC ENGINEERING STUDIO. ALL RIGHTS RESERVED.
           </div>
-          <div className="flex items-center gap-4 text-[11px] font-bold">
-            <span className="text-[#CCFF00]">INDIAN RUPEES (₹) TRANSACTIONS</span>
-            <span>•</span>
-            <span className="text-white">BACKBLAZE B2 VAULT</span>
-            <span>•</span>
-            <span className="text-[#CCFF00]">ANYDESK LIVE SETUP GUARANTEED</span>
-          </div>
+
         </div>
       </div>
     </footer>

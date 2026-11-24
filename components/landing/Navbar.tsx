@@ -25,23 +25,13 @@ export default function Navbar() {
           <Link href="/" className="flex items-center gap-3 group shrink-0">
             <div className="relative w-10 h-10 rounded-2xl bg-black text-[#CCFF00] flex items-center justify-center font-black text-xl shadow-md transition-all duration-300 group-hover:scale-105 group-hover:rotate-3 group-hover:shadow-glow-lime">
               N
-              <span className="absolute -top-1 -right-1 flex h-2.5 w-2.5">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#CCFF00] opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#CCFF00]"></span>
-              </span>
+
             </div>
             <div className="flex flex-col">
               <span className="font-black text-2xl tracking-tighter text-black uppercase leading-none">
                 NOTX
               </span>
-              <div className="flex items-center gap-1.5 mt-0.5">
-                <span className="inline-block px-2 py-0.2 bg-[#CCFF00] text-black font-extrabold text-[9px] uppercase tracking-wider rounded-full border border-black/20">
-                  STUDIO
-                </span>
-                <span className="text-[10px] uppercase tracking-widest text-black/50 font-black">
-                  EST. 2026
-                </span>
-              </div>
+
             </div>
           </Link>
 
